@@ -38,7 +38,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return $this->validationError($validator->errors());
+            return $this->validationErrorResponse($validator->errors());
         }
 
         User::query()->create($credentials);
@@ -60,7 +60,7 @@ class AuthController extends Controller
         $credentials = $request->only(['email', 'password']);
 
         if (!$token = auth()->attempt($credentials)) {
-            return $this->messageError();
+            return $this->messageErrorResponse();
         }
 
         return $this->respondWithToken($token);
@@ -73,8 +73,8 @@ class AuthController extends Controller
      */
     public function me(): JsonResponse
     {
-        return $this->data([
-            'user' => auth()->user(),
+        return $this->baseDataResponse([
+            auth()->user(),
         ]);
     }
 
@@ -87,9 +87,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return $this->data([
-            'message' => 'Successfully logged out'
-        ]);
+        return $this->messageDataResponse('Logged out successfully');
     }
 
     /**
@@ -111,7 +109,7 @@ class AuthController extends Controller
      */
     protected function respondWithToken(string $token): JsonResponse
     {
-        return $this->data([
+        return $this->baseDataResponse([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60

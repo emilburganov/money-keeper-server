@@ -3,19 +3,28 @@
 namespace App\Traits;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\MessageBag;
 
 trait ResponseTrait
 {
-    public function data($content, $code = 200): JsonResponse
+    protected function baseDataResponse(array|JsonResource $data, int $code = 200): JsonResponse
+    {
+        return response()->json([
+            'data' => $data,
+        ], $code);
+    }
+
+    protected function messageDataResponse(string $message, int $code = 200): JsonResponse
     {
         return response()->json([
             'data' => [
-                $content
+                'message' => $message,
             ],
         ], $code);
     }
 
-    public function messageError($message = 'Unauthorized', $code = 401): JsonResponse
+    protected function messageErrorResponse(string $message = 'Unauthorized', int $code = 401): JsonResponse
     {
         return response()->json([
             'error' => [
@@ -24,7 +33,7 @@ trait ResponseTrait
         ], $code);
     }
 
-    public function validationError($errors): JsonResponse
+    protected function validationErrorResponse(MessageBag $errors): JsonResponse
     {
         return response()->json([
             'error' => [
