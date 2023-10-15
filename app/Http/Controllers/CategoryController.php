@@ -10,13 +10,22 @@ use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
+    /**
+     * @return JsonResponse
+     */
     public function index(): JsonResponse
     {
         $categories = Category::all();
 
-        return $this->baseDataResponse(CategoryResource::collection($categories));
+        return response()->json([
+            CategoryResource::collection($categories)
+        ]);
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function create(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -25,14 +34,21 @@ class CategoryController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return $this->validationErrorResponse($validator->errors());
+            return $this->validationError($validator->errors());
         }
 
         $category = Category::query()->create($request->only(['name', 'description']));
 
-        return $this->baseDataResponse(new CategoryResource($category));
+        return response()->json([
+            new CategoryResource($category)
+        ]);
     }
 
+    /**
+     * @param Category $category
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function update(Category $category, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -42,18 +58,22 @@ class CategoryController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return $this->validationErrorResponse($validator->errors());
+            return $this->validationError($validator->errors());
         }
 
         $category->update($request->only(['name', 'description']));
 
-        return $this->messageDataResponse('Category updated successfully');
+        return $this->message('Category successful updated.', 202);
     }
 
+    /**
+     * @param Category $category
+     * @return JsonResponse
+     */
     public function destroy(Category $category): JsonResponse
     {
         $category->delete();
 
-        return $this->messageDataResponse('Category deleted successfully');
+        return $this->message('Category successful deleted.');
     }
 }

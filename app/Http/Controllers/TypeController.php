@@ -10,13 +10,22 @@ use Illuminate\Support\Facades\Validator;
 
 class TypeController extends Controller
 {
+    /**
+     * @return JsonResponse
+     */
     public function index(): JsonResponse
     {
         $types = Type::all();
 
-        return $this->baseDataResponse(TypeResource::collection($types));
+        return response()->json([
+            TypeResource::collection($types)
+        ]);
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function create(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -24,11 +33,44 @@ class TypeController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return $this->validationErrorResponse($validator->errors());
+            return $this->validationError($validator->errors());
         }
 
         $type = Type::query()->create($request->only(['name']));
 
-        return $this->baseDataResponse(new TypeResource($type));
+        return response()->json([
+            new TypeResource($type)
+        ]);
+    }
+
+    /**
+     * @param Type $type
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function update(Type $type, Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|between:3,100',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->validationError($validator->errors());
+        }
+
+        $type->update($request->only(['name']));
+
+        return $this->message('Type successful updated.',202);
+    }
+
+    /**
+     * @param Type $type
+     * @return JsonResponse
+     */
+    public function destroy(Type $type): JsonResponse
+    {
+        $type->delete();
+
+        return $this->message('Type successful deleted.');
     }
 }

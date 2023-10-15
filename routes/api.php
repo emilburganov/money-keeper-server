@@ -27,8 +27,11 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
+});
+
+Route::group(['middleware' => 'api'], function () {
+    Route::post('refresh', [AuthController::class, 'refresh']);
 });
 
 /* Categories CRUD */
@@ -40,3 +43,5 @@ Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
 /* Types CRUD */
 Route::get('/types', [TypeController::class, 'index']);
 Route::post('/types', [TypeController::class, 'create']);
+Route::patch('/types/{type}', [TypeController::class, 'update']);
+Route::delete('/types/{type}', [TypeController::class, 'destroy']);

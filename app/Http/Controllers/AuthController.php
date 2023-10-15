@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -16,7 +19,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'refresh']]);
     }
 
     /**
@@ -27,23 +30,22 @@ class AuthController extends Controller
      */
     public function register(Request $request): JsonResponse
     {
-//        App::setlocale('ru');
-
         $credentials = $request->only(['name', 'email', 'password', 'password_confirmation']);
 
         $validator = Validator::make($credentials, [
-            'name' => 'required|string|between:3,80',
+            'name' => 'required|string|min:3|max:60',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|between:8,100|confirmed',
+            'password' => 'required|string|min:8|max:100',
+            'password_confirmation' => 'required|same:password'
         ]);
 
         if ($validator->fails()) {
-            return $this->validationErrorResponse($validator->errors());
+            return $this->validationError($validator->errors());
         }
 
         User::query()->create($credentials);
 
-        $token = auth()->attempt($credentials);
+        $token = Auth::attempt($credentials);
 
         return $this->respondWithToken($token);
     }
@@ -56,11 +58,10 @@ class AuthController extends Controller
      */
     public function login(Request $request): JsonResponse
     {
-
         $credentials = $request->only(['email', 'password']);
 
-        if (!$token = auth()->attempt($credentials)) {
-            return $this->messageErrorResponse();
+        if (!$token = Auth::attempt($credentials)) {
+            return $this->message('Invalid login or password.', 401);
         }
 
         return $this->respondWithToken($token);
@@ -73,8 +74,8 @@ class AuthController extends Controller
      */
     public function me(): JsonResponse
     {
-        return $this->baseDataResponse([
-            auth()->user(),
+        return response()->json([
+            new UserResource(Auth::user()),
         ]);
     }
 
@@ -85,9 +86,11 @@ class AuthController extends Controller
      */
     public function logout(): JsonResponse
     {
-        auth()->logout();
+        Auth::logout();
 
-        return $this->messageDataResponse('Logged out successfully');
+        return response()->json([
+            'message' => 'Successful logout.',
+        ]);
     }
 
     /**
@@ -97,7 +100,7 @@ class AuthController extends Controller
      */
     public function refresh(): JsonResponse
     {
-        return $this->respondWithToken(auth()->refresh());
+        return $this->respondWithToken(Auth::refresh());
     }
 
     /**
@@ -109,10 +112,20 @@ class AuthController extends Controller
      */
     protected function respondWithToken(string $token): JsonResponse
     {
-        return $this->baseDataResponse([
+        return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => Auth::factory()->getTTL() * 60
         ]);
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return Guard
+     */
+    public function guard(): Guard
+    {
+        return Auth::guard();
     }
 }
