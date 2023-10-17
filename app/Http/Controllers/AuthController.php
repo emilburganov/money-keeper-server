@@ -28,7 +28,7 @@ class AuthController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function register(Request $request): JsonResponse
+    public function registration(Request $request): JsonResponse
     {
         $credentials = $request->only(['name', 'email', 'password', 'password_confirmation']);
 
