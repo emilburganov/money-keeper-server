@@ -3,7 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Category;
+use App\Models\Type;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +16,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        Type::query()->create([
+            'name' => 'Incomes',
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        Type::query()->create([
+            'name' => 'Expenses',
+        ]);
+
+        User::query()->create([
+            'name' => 'Emil Burganov',
+            'email' => 'emil.burganov03@gmail.com',
+            'password' => Hash::make('12345678'),
+        ]);
+
+        Category::factory(10)->create();
     }
 }

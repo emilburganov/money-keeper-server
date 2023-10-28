@@ -17,9 +17,9 @@ class TypeController extends Controller
     {
         $types = Type::all();
 
-        return response()->json([
+        return response()->json(
             TypeResource::collection($types)
-        ]);
+        );
     }
 
     /**

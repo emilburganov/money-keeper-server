@@ -19,7 +19,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register', 'refresh']]);
+        $this->middleware('auth:api', ['except' => ['login', 'registration', 'refresh']]);
     }
 
     /**
@@ -74,9 +74,9 @@ class AuthController extends Controller
      */
     public function me(): JsonResponse
     {
-        return response()->json([
+        return response()->json(
             new UserResource(Auth::user()),
-        ]);
+        );
     }
 
     /**
@@ -88,9 +88,7 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        return response()->json([
-            'message' => 'Successful logout.',
-        ]);
+        return $this->message('Successful logout.');
     }
 
     /**

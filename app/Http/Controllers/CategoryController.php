@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -11,15 +13,16 @@ use Illuminate\Support\Facades\Validator;
 class CategoryController extends Controller
 {
     /**
+     * @param User $user
      * @return JsonResponse
      */
-    public function index(): JsonResponse
+    public function index(User $user): JsonResponse
     {
-        $categories = Category::all();
+        $categories = $user->categories;
 
-        return response()->json([
+        return response()->json(
             CategoryResource::collection($categories)
-        ]);
+        );
     }
 
     /**
@@ -39,9 +42,9 @@ class CategoryController extends Controller
 
         $category = Category::query()->create($request->only(['name', 'description']));
 
-        return response()->json([
-            new CategoryResource($category)
-        ]);
+        return response()->json(
+            new CategoryResource($category),
+        );
     }
 
     /**
@@ -70,8 +73,9 @@ class CategoryController extends Controller
      * @param Category $category
      * @return JsonResponse
      */
-    public function destroy(Category $category): JsonResponse
+    public function destroy(User $user, Category $category): JsonResponse
     {
+        if ($user->categories()->firstWhere('user_id', $category->user_id))
         $category->delete();
 
         return $this->message('Category successful deleted.');
