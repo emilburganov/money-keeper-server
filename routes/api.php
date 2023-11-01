@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-/* JWT Auth */
+/* Auth */
 Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
     Route::post('registration', [AuthController::class, 'registration']);
     Route::post('login', [AuthController::class, 'login']);
@@ -30,10 +30,12 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'api'], function () {
+    /* Auth */
     Route::post('refresh', [AuthController::class, 'refresh']);
 
-    /* Categories CRUD */
-    Route::get('/categories/{user}', [CategoryController::class, 'index']);
+    /* Categories */
+    Route::get('/categories/{user}', [CategoryController::class, 'index'])
+        ->can('viewAny', 'category');
     Route::post('/categories/{user}', [CategoryController::class, 'create'])
         ->can('create', 'category');
     Route::patch('/categories/{user}/{category}', [CategoryController::class, 'update'])
@@ -42,7 +44,7 @@ Route::group(['middleware' => 'api'], function () {
         ->can('delete', 'category');
 });
 
-/* Types CRUD */
+/* Types */
 Route::get('/types', [TypeController::class, 'index']);
 Route::post('/types', [TypeController::class, 'create']);
 Route::patch('/types/{type}', [TypeController::class, 'update']);
