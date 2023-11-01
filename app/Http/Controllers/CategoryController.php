@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Models\User;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -70,12 +69,12 @@ class CategoryController extends Controller
     }
 
     /**
+     * @param User $user
      * @param Category $category
      * @return JsonResponse
      */
     public function destroy(User $user, Category $category): JsonResponse
     {
-        if ($user->categories()->firstWhere('user_id', $category->user_id))
         $category->delete();
 
         return $this->message('Category successful deleted.');

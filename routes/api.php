@@ -27,15 +27,15 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('me', [AuthController::class, 'me']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+
+    Route::patch('update', [AuthController::class, 'update']);
 });
 
 Route::group(['middleware' => 'api'], function () {
-    /* Auth */
-    Route::post('refresh', [AuthController::class, 'refresh']);
-
     /* Categories */
-    Route::get('/categories/{user}', [CategoryController::class, 'index'])
-        ->can('viewAny', 'category');
+    Route::get('/categories/{user}', [CategoryController::class, 'index']);
+//        ->can('viewAny', 'category');
     Route::post('/categories/{user}', [CategoryController::class, 'create'])
         ->can('create', 'category');
     Route::patch('/categories/{user}/{category}', [CategoryController::class, 'update'])

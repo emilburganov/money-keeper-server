@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Category;
 use App\Models\Type;
 use App\Models\User;
@@ -16,6 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
         Type::query()->create([
             'name' => 'Incomes',
         ]);

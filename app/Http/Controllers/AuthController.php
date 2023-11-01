@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\LangResource;
 use App\Http\Resources\UserResource;
+use App\Models\Lang;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
@@ -125,5 +128,36 @@ class AuthController extends Controller
     public function guard(): Guard
     {
         return Auth::guard();
+    }
+
+    /**
+     * Update a user
+     *
+     * @param User $user
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function update(User $user, Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'string|min:3|max:60',
+            'email' => [
+                'email',
+                Rule::unique('users')->ignore(auth()->id()),
+            ],
+            'password' => 'string|min:8|max:100',
+            'lang' => [
+                'required',
+                Rule::in(['en', 'ru'])
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return $this->validationError($validator->errors());
+        }
+
+        $user->update($request->only(['name', 'email', 'password', 'lang']));
+
+        return $this->message('User successful updated.', 202);
     }
 }
