@@ -31,8 +31,8 @@ Route::group(['middleware' => 'lang'], function () {
     });
 
     Route::group(['middleware' => 'api'], function () {
-        Route::get('/categories/{user}', [CategoryController::class, 'index']);
-//        ->can('viewAny', 'category');
+        Route::get('/categories/{user}', [CategoryController::class, 'index'])
+            ->can('viewAny', 'category');
         Route::post('/categories/{user}', [CategoryController::class, 'create'])
             ->can('create', 'category');
         Route::patch('/categories/{user}/{category}', [CategoryController::class, 'update'])
