@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Validator;
 class CategoryController extends Controller
 {
     /**
+     * Index the categories
+     *
      * @param User $user
      * @return JsonResponse
      */
@@ -25,6 +27,8 @@ class CategoryController extends Controller
     }
 
     /**
+     * Create a category
+     *
      * @param Request $request
      * @return JsonResponse
      */
@@ -47,6 +51,8 @@ class CategoryController extends Controller
     }
 
     /**
+     * Update a Category
+     *
      * @param Category $category
      * @param Request $request
      * @return JsonResponse
@@ -69,6 +75,8 @@ class CategoryController extends Controller
     }
 
     /**
+     * Destroy a category
+     *
      * @param User $user
      * @param Category $category
      * @return JsonResponse
@@ -77,6 +85,6 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return $this->message('Category successful deleted.');
+        return $this->message('Category successful destroyed.');
     }
 }

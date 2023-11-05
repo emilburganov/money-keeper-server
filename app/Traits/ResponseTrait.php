@@ -3,6 +3,8 @@
 namespace App\Traits;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\MessageBag;
 
 trait ResponseTrait
@@ -31,7 +33,7 @@ trait ResponseTrait
     {
         return response()->json([
             'errors' => $errors,
-            'message' => 'Validation error.'
+            'message' =>  __('messages.validation_error'),
         ], 422);
     }
 }

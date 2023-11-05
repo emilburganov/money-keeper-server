@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 class TypeController extends Controller
 {
     /**
+     * Index the types
+     *
      * @return JsonResponse
      */
     public function index(): JsonResponse
@@ -23,6 +25,8 @@ class TypeController extends Controller
     }
 
     /**
+     * Create a type
+     *
      * @param Request $request
      * @return JsonResponse
      */
@@ -44,6 +48,8 @@ class TypeController extends Controller
     }
 
     /**
+     * Update a type
+     *
      * @param Type $type
      * @param Request $request
      * @return JsonResponse
@@ -64,6 +70,8 @@ class TypeController extends Controller
     }
 
     /**
+     * Destroy a type
+     *
      * @param Type $type
      * @return JsonResponse
      */
@@ -71,6 +79,6 @@ class TypeController extends Controller
     {
         $type->delete();
 
-        return $this->message('Type successful deleted.');
+        return $this->message('Type successful destroyed.');
     }
 }
