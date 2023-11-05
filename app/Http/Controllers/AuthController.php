@@ -127,35 +127,4 @@ class AuthController extends Controller
     {
         return Auth::guard();
     }
-
-    /**
-     * Update a user
-     *
-     * @param User $user
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function update(User $user, Request $request): JsonResponse
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'string|min:3|max:60',
-            'email' => [
-                'email',
-                Rule::unique('users')->ignore(auth()->id()),
-            ],
-            'password' => 'string|min:8|max:100',
-            'lang' => [
-                'required',
-                Rule::in(['en', 'ru'])
-            ],
-        ]);
-
-        if ($validator->fails()) {
-            return $this->validationError($validator->errors());
-        }
-
-        $user->update($request->only(['name', 'email', 'password', 'lang']));
-
-        return $this->message('User successful updated.', 202);
-    }
 }

@@ -28,8 +28,6 @@ Route::group(['middleware' => 'lang'], function () {
         Route::post('logout', [AuthController::class, 'logout']);
         Route::post('me', [AuthController::class, 'me']);
         Route::post('refresh', [AuthController::class, 'refresh']);
-
-        Route::patch('update', [AuthController::class, 'update']);
     });
 
     Route::group(['middleware' => 'api'], function () {
