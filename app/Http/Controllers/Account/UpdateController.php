@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Requests\Account\UpdateRequest;
+use App\Http\Resources\AccountResource;
+use App\Http\Resources\CategoryResource;
 use App\Models\Account;
 use Illuminate\Http\JsonResponse;
 
@@ -14,8 +16,8 @@ class UpdateController extends BaseController
 
         $this->service->update($account, $data);
 
-        return response()->json([
-            'message' => 'Account successful updated.',
-        ], 202);
+        return response()->json(
+            new AccountResource($account),
+        );
     }
 }

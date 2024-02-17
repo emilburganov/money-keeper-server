@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Expense;
 
 use App\Http\Requests\Expense\UpdateRequest;
+use App\Http\Resources\AccountResource;
+use App\Http\Resources\ExpenseResource;
 use App\Models\Expense;
 use Illuminate\Http\JsonResponse;
 
@@ -14,8 +16,8 @@ class UpdateController extends BaseController
 
         $this->service->update($expense, $data);
 
-        return response()->json([
-            'message' => 'Expense successful updated.',
-        ], 202);
+        return response()->json(
+            new ExpenseResource($expense),
+        );
     }
 }
