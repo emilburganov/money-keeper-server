@@ -2,7 +2,8 @@
 
 namespace App\Enums;
 
-enum CategoryTypeEnum:string {
+enum CategoryTypeEnum: string
+{
     case INCOMES = 'Incomes';
     case EXPENSES = 'Expenses';
 }

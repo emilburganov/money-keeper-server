@@ -1,12 +1,5 @@
 <?php
 
-use App\Http\Controllers\AccountController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CurrencyController;
-use App\Http\Controllers\ExpenseController;
-use App\Http\Controllers\IncomeController;
-use App\Http\Controllers\TypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,37 +19,48 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => 'lang'], function () {
-    Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
-        Route::post('registration', [AuthController::class, 'registration']);
-        Route::post('login', [AuthController::class, 'login']);
-        Route::post('logout', [AuthController::class, 'logout']);
-        Route::post('me', [AuthController::class, 'me']);
-        Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::group([
+        'prefix' => 'auth',
+        'namespace' => 'App\Http\Controllers\Auth'
+    ], function () {
+        Route::post('registration', 'RegistrationController');
+        Route::post('login', 'LoginController');
+        Route::post('logout', 'LogoutController');
+        Route::post('me', 'MeController');
+        Route::post('refresh', 'RefreshController');
     });
 
     Route::group(['middleware' => ['api', 'auth']], function () {
-        Route::apiResource('categories', CategoryController::class);
+        Route::group(['namespace' => '\App\Http\Controllers\Category'], function () {
+            Route::get('categories', 'IndexController');
+            Route::post('categories', 'StoreController');
+            Route::patch('categories/{category}', 'UpdateController');
+            Route::delete('categories/{category}', 'DestroyController');
+        });
 
-//        Route::get('/categories', [CategoryController::class, 'index']);
-//        Route::post('/categories', [CategoryController::class, 'store']);
-//        Route::patch('/categories/{category}', [CategoryController::class, 'update']);
-//        Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
+        Route::group(['namespace' => '\App\Http\Controllers\Account'], function () {
+            Route::get('accounts', 'IndexController');
+            Route::post('accounts', 'StoreController');
+            Route::patch('accounts/{account}', 'UpdateController');
+            Route::delete('accounts/{account}', 'DestroyController');
+        });
 
-        Route::get('/incomes', [IncomeController::class, 'index']);
-        Route::post('/incomes', [IncomeController::class, 'store']);
-        Route::patch('/incomes/{income}', [IncomeController::class, 'update']);
-        Route::delete('/incomes/{income}', [IncomeController::class, 'destroy']);
+        Route::group(['namespace' => '\App\Http\Controllers\Income'], function () {
+            Route::get('incomes', 'IndexController');
+            Route::post('incomes', 'StoreController');
+            Route::patch('incomes/{income}', 'UpdateController');
+            Route::delete('incomes/{income}', 'DestroyController');
+        });
 
-        Route::get('/expenses', [ExpenseController::class, 'index']);
-        Route::post('/expenses', [ExpenseController::class, 'store']);
-        Route::patch('/expenses/{expense}', [ExpenseController::class, 'update']);
-        Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy']);
+        Route::group(['namespace' => '\App\Http\Controllers\Expense'], function () {
+            Route::get('expenses', 'IndexController');
+            Route::post('expenses', 'StoreController');
+            Route::patch('expenses/{expense}', 'UpdateController');
+            Route::delete('expenses/{expense}', 'DestroyController');
+        });
 
-        Route::get('/accounts', [AccountController::class, 'index']);
-        Route::post('/accounts', [AccountController::class, 'store']);
-        Route::patch('/accounts/{account}', [AccountController::class, 'update']);
-        Route::delete('/accounts/{account}', [AccountController::class, 'destroy']);
-
-        Route::get('/currencies', [CurrencyController::class, 'index']);
+        Route::group(['namespace' => '\App\Http\Controllers\Currency'], function () {
+            Route::get('currencies', 'IndexController');
+        });
     });
 });
