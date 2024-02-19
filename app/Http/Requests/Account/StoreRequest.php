@@ -5,6 +5,7 @@ namespace App\Http\Requests\Account;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -24,7 +25,14 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|between:3,60|unique:accounts,title,user_id' . Auth::id(),
+            'title' => [
+                'required',
+                'string',
+                'between:3,60',
+                Rule::unique('accounts')
+                    ->ignore($this->route('account'))
+                    ->where('user_id', Auth::id())
+            ],
             'currency_id' => 'required|exists:currencies,id',
         ];
     }

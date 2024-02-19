@@ -26,7 +26,14 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|between:3,60|unique:categories,title,user_id' . Auth::id(),
+            'title' => [
+                'required',
+                'string',
+                'between:3,60',
+                Rule::unique('categories')
+                    ->ignore($this->route('category'))
+                    ->where('user_id', Auth::id())
+            ],
             'type' => [Rule::enum(CategoryTypeEnum::class)],
         ];
     }

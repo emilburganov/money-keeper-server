@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Requests\Account\UpdateRequest;
 use App\Http\Resources\AccountResource;
-use App\Http\Resources\CategoryResource;
 use App\Models\Account;
 use Illuminate\Http\JsonResponse;
 

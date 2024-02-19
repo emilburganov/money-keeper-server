@@ -18,8 +18,8 @@ class ExpenseResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'amount' => $this->amount,
-            'category' => $this->category->title,
-            'account' => $this->account->title,
+            'category' => new CategoryResource($this->category),
+            'account' => new AccountResource($this->account),
             'created_at' => $this->created_at,
         ];
     }

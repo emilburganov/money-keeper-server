@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         Category::factory(10)->create();
 
         Currency::query()->create([
-            'title' => 'Российский рубль',
+            'title' => 'Russian ruble',
             'code' => 'RUB',
         ]);
 

@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Account;
 
+use App\Models\Account;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -14,6 +16,9 @@ class UpdateRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+//        $account = Account::query()->find($this->route('account'));
+//
+//        return $account && $this->user()->can('update', $account);
     }
 
     /**
@@ -24,7 +29,14 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|between:3,60|unique:accounts,title,user_id' . Auth::id(),
+            'title' => [
+                'required',
+                'string',
+                'between:3,60',
+                Rule::unique('accounts')
+                    ->ignore($this->route('account'))
+                    ->where('user_id', Auth::id())
+            ],
             'currency_id' => 'required|exists:currencies,id',
         ];
     }

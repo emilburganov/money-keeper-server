@@ -14,10 +14,6 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->float('amount', 15);
-            $table->foreignId('category_id')
-                ->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
             $table->foreignId('account_from_id')
                 ->references('id', 'account_from_id')
                 ->on('accounts')
