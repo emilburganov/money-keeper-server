@@ -59,6 +59,13 @@ Route::group(['middleware' => 'lang'], function () {
             Route::delete('expenses/{expense}', 'DestroyController');
         });
 
+        Route::group(['namespace' => '\App\Http\Controllers\Transfer'], function () {
+            Route::get('transfers', 'IndexController');
+            Route::post('transfers', 'StoreController');
+            Route::patch('transfers/{transfer}', 'UpdateController');
+            Route::delete('transfers/{transfer}', 'DestroyController');
+        });
+
         Route::group(['namespace' => '\App\Http\Controllers\Currency'], function () {
             Route::get('currencies', 'IndexController');
         });
