@@ -2,9 +2,12 @@
 
 namespace App\Http\Requests\Expense;
 
+use App\Enums\CategoryTypeEnum;
+use App\Models\Category;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -13,7 +16,13 @@ class UpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $expense = $this->route('expense');
+
+        return (
+            $expense->account->user_id === Auth::id() &&
+            $expense->account->user_id === Auth::id() &&
+            $expense->category->user_id === Auth::id()
+        );
     }
 
     /**
@@ -23,10 +32,18 @@ class UpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $expenseCategories = Category::query()
+            ->where('type', CategoryTypeEnum::EXPENSES)
+            ->get();
+
         return [
             'title' => 'required|string|between:3,60',
             'amount' => 'required|numeric|min:0|max:1000000000',
-            'category_id' => 'required|exists:categories,id',
+            'category_id' => [
+                'required',
+                'exists:categories,id',
+                Rule::in($expenseCategories->pluck('id')),
+            ],
             'account_id' => 'required|exists:accounts,id',
         ];
     }

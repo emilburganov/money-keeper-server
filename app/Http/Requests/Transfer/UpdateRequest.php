@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Transfer;
 
+use App\Models\Transfer;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateRequest extends FormRequest
 {
@@ -12,7 +14,12 @@ class UpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $transfer = $this->route('transfer');
+
+        return (
+            $transfer->account_from->user_id === Auth::id() &&
+            $transfer->account_to->user_id === Auth::id()
+        );
     }
 
     /**
@@ -25,8 +32,8 @@ class UpdateRequest extends FormRequest
         return [
             'title' => 'required|string|between:3,60',
             'amount' => 'required|numeric|min:0|max:1000000000',
-            'account_from_id' => 'required|exists:accounts,id',
-            'account_to_id' => 'required|exists:accounts,id',
+            'account_from_id' => 'required|exists:accounts,id|different:account_to_id',
+            'account_to_id' => 'required|exists:accounts,id|different:account_from_id',
         ];
     }
 }

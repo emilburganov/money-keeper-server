@@ -20,7 +20,7 @@ class IncomeResource extends JsonResource
             'amount' => $this->amount,
             'category' => new CategoryResource($this->category),
             'account' => new AccountResource($this->account),
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->format('Y-m-d H:i'),
         ];
     }
 }

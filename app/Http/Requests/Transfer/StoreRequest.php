@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Transfer;
 
+use App\Models\Account;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreRequest extends FormRequest
 {
@@ -12,7 +14,12 @@ class StoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return (
+            Account::query()->find(request()->account_from_id)
+                ?->user_id === Auth::id() &&
+            Account::query()->find(request()->account_to_id)
+                ?->user_id === Auth::id()
+        );
     }
 
     /**

@@ -32,6 +32,8 @@ class Service
 
     public function destroy(Account $account): void
     {
-        $account->delete();
+        if ( $account->user_id === Auth::id()) {
+            $account->delete();
+        }
     }
 }

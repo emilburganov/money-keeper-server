@@ -28,11 +28,13 @@ class DatabaseSeeder extends Seeder
         Currency::query()->create([
             'title' => 'Russian ruble',
             'code' => 'RUB',
+            'symbol' => '₽',
         ]);
 
         Currency::query()->create([
             'title' => 'Dollar USA',
             'code' => 'USD',
+            'symbol' => '$',
         ]);
     }
 }

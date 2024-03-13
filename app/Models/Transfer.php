@@ -22,6 +22,6 @@ class Transfer extends Model
 
     public function account_to(): BelongsTo
     {
-        return $this->belongsTo(Account::class, 'account_from_id', 'id');
+        return $this->belongsTo(Account::class, 'account_to_id', 'id');
     }
 }

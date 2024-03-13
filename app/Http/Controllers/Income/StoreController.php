@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Income;
 
+use App\Enums\CategoryTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Income\StoreRequest;
 use App\Http\Resources\IncomeResource;
+use App\Models\Category;
 use App\Models\Income;
 use Illuminate\Http\JsonResponse;
 

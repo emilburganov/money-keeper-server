@@ -20,7 +20,7 @@ class TransferResource extends JsonResource
             'amount' => $this->amount,
             'account_from' => new AccountResource($this->account_from),
             'account_to' => new AccountResource($this->account_to),
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->format('Y-m-d H:i'),
         ];
     }
 }

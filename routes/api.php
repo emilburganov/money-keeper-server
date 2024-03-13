@@ -30,7 +30,7 @@ Route::group(['middleware' => 'lang'], function () {
         Route::post('refresh', 'RefreshController');
     });
 
-    Route::group(['middleware' => ['api', 'auth']], function () {
+    Route::group(['middleware' => ['api']], function () {
         Route::group(['namespace' => '\App\Http\Controllers\Category'], function () {
             Route::get('categories', 'IndexController');
             Route::post('categories', 'StoreController');

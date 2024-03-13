@@ -16,9 +16,6 @@ class UpdateRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
-//        $account = Account::query()->find($this->route('account'));
-//
-//        return $account && $this->user()->can('update', $account);
     }
 
     /**
