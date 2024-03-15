@@ -19,4 +19,9 @@ class Expense extends Model
     {
         return $this->belongsTo(Account::class);
     }
+
+    public function user(): BelongsTo
+    {
+        return $this->account->belongsTo(User::class);
+    }
 }

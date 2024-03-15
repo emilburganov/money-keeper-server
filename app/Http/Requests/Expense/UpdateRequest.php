@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Expense;
 
 use App\Enums\CategoryTypeEnum;
+use App\Models\Account;
 use App\Models\Category;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -16,13 +17,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $expense = $this->route('expense');
-
-        return (
-            $expense->account->user_id === Auth::id() &&
-            $expense->account->user_id === Auth::id() &&
-            $expense->category->user_id === Auth::id()
-        );
+        return true;
     }
 
     /**

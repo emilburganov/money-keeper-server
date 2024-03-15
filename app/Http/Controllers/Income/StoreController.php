@@ -14,6 +14,7 @@ class StoreController extends BaseController
 {
     public function __invoke(StoreRequest $request): JsonResponse
     {
+        $this->authorize('create', Income::class);
         $data = $request->safe();
 
         $income = $this->service->store($data);

@@ -28,9 +28,11 @@ class Service
         $transfer->update([
             'title' => $data->title,
             'amount' => $data->amount,
-            'account_from_id' => $data->account_from_id,
-            'account_to_id' => $data->account_to_id,
         ]);
+
+        $transfer->account_from()->associate($data->account_from_id);
+        $transfer->account_to()->associate($data->account_to_id);
+        $transfer->save();
     }
 
     public function destroy(Transfer $transfer): void

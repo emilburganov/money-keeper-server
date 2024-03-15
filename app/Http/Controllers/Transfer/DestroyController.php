@@ -9,6 +9,7 @@ class DestroyController extends BaseController
 {
     public function __invoke(Transfer $transfer): JsonResponse
     {
+        $this->authorize('delete', $transfer);
         $this->service->destroy($transfer);
 
         return response()->json([

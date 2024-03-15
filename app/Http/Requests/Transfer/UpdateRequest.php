@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Transfer;
 
+use App\Models\Account;
+use App\Models\Category;
 use App\Models\Transfer;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -14,12 +16,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $transfer = $this->route('transfer');
-
-        return (
-            $transfer->account_from->user_id === Auth::id() &&
-            $transfer->account_to->user_id === Auth::id()
-        );
+        return true;
     }
 
     /**

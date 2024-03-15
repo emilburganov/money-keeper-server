@@ -17,12 +17,7 @@ class StoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return (
-            Category::query()->find(request()->category_id)
-                ?->user_id === Auth::id() &&
-            Account::query()->find(request()->account_id)
-                ?->user_id === Auth::id()
-        );
+        return true;
     }
 
     /**

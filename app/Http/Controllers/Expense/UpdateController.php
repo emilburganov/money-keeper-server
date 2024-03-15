@@ -12,6 +12,7 @@ class UpdateController extends BaseController
 {
     public function __invoke(UpdateRequest $request, Expense $expense): JsonResponse
     {
+        $this->authorize('update', $expense);
         $data = $request->safe();
 
         $this->service->update($expense, $data);

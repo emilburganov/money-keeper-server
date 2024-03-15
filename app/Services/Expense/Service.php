@@ -29,9 +29,11 @@ class Service
         $expense->update([
             'title' => $data->title,
             'amount' => $data->amount,
-            'category_id' => $data->category_id,
-            'account_id' => $data->account_id,
         ]);
+
+        $expense->category()->associate($data->category_id);
+        $expense->account()->associate($data->account_id);
+        $expense->save();
     }
 
     public function destroy(Expense $expense): void

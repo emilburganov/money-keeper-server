@@ -29,9 +29,11 @@ class Service
         $income->update([
             'title' => $data->title,
             'amount' => $data->amount,
-            'category_id' => $data->category_id,
-            'account_id' => $data->account_id,
         ]);
+
+        $income->category()->associate($data->category_id);
+        $income->account()->associate($data->account_id);
+        $income->save();
     }
 
     public function destroy(Income $income): void

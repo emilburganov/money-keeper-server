@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Income;
 
 use App\Enums\CategoryTypeEnum;
+use App\Models\Account;
 use App\Models\Category;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -16,13 +17,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $income = $this->route('income');
-
-        return (
-            $income->account->user_id === Auth::id() &&
-            $income->account->user_id === Auth::id() &&
-            $income->category->user_id === Auth::id()
-        );
+        return true;
     }
 
     /**
