@@ -2,12 +2,13 @@
 
 namespace App\Services\Expense;
 
+use App\Models\Account;
 use App\Models\Currency;
 use App\Models\Expense;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class Service
+class ExpenseService
 {
     public function index(): Collection
     {

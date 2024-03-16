@@ -6,7 +6,7 @@ use App\Models\Account;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class Service
+class AccountService
 {
     public function index(): Collection
     {

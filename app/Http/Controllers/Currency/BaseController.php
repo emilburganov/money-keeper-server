@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Currency;
 
 use App\Http\Controllers\Controller;
-use App\Services\Currency\Service;
+use App\Services\Currency\CurrencyService;
 
 class BaseController extends Controller
 {
-    public Service $service;
+    public CurrencyService $service;
 
-    public function __construct(Service $service)
+    public function __construct(CurrencyService $service)
     {
         $this->service = $service;
     }

@@ -6,7 +6,7 @@ use App\Models\Transfer;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class Service
+class TransferService
 {
     public function index(): Collection
     {
@@ -30,8 +30,8 @@ class Service
             'amount' => $data->amount,
         ]);
 
-        $transfer->account_from()->associate($data->account_from_id);
-        $transfer->account_to()->associate($data->account_to_id);
+        $transfer->accountFrom()->associate($data->account_from_id);
+        $transfer->accountTo()->associate($data->account_to_id);
         $transfer->save();
     }
 

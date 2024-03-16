@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use App\Services\Account\Service;
+use App\Services\Account\AccountService;
 
 class BaseController extends Controller
 {
-    public Service $service;
+    public AccountService $service;
 
-    public function __construct(Service $service)
+    public function __construct(AccountService $service)
     {
         $this->service = $service;
     }

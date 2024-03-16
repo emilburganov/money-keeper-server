@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Transfer;
 
 use App\Http\Controllers\Controller;
-use App\Services\Transfer\Service;
+use App\Services\Transfer\TransferService;
 
 class BaseController extends Controller
 {
-    public Service $service;
+    public TransferService $service;
 
-    public function __construct(Service $service)
+    public function __construct(TransferService $service)
     {
         $this->service = $service;
     }

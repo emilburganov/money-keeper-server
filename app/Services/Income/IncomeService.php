@@ -7,7 +7,7 @@ use App\Models\Income;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class Service
+class IncomeService
 {
     public function index(): Collection
     {

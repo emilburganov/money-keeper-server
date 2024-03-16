@@ -18,8 +18,8 @@ class TransferResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'amount' => $this->amount,
-            'account_from' => new AccountResource($this->account_from),
-            'account_to' => new AccountResource($this->account_to),
+            'account_from' => new AccountResource($this->accountFrom),
+            'account_to' => new AccountResource($this->accountTo),
             'created_at' => $this->created_at->format('Y-m-d H:i'),
         ];
     }

@@ -16,25 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-        User::query()->create([
-            'name' => 'Emil Burganov',
-            'email' => 'emil.burganov03@gmail.com',
-            'password' => Hash::make('12345678'),
+        $this->call([
+            CurrencySeeder::class,
+            UserSeeder::class,
         ]);
 
         Category::factory(10)->create();
-
-        Currency::query()->create([
-            'title' => 'Russian ruble',
-            'code' => 'RUB',
-            'symbol' => '₽',
-        ]);
-
-        Currency::query()->create([
-            'title' => 'Dollar USA',
-            'code' => 'USD',
-            'symbol' => '$',
-        ]);
     }
 }

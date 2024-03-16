@@ -31,8 +31,8 @@ class TransferPolicy
      */
     public function create(User $user): bool
     {
-        $accountFrom = Account::query()->find(request()->account_from);
-        $accountTo = Account::query()->find(request()->account_to);
+        $accountFrom = Account::query()->find(request()->account_from_id);
+        $accountTo = Account::query()->find(request()->account_to_id);
 
         return (
             $accountFrom->user->getKey() === $user->getKey() &&
@@ -45,8 +45,8 @@ class TransferPolicy
      */
     public function update(User $user, Transfer $transfer): bool
     {
-        $accountFrom = Account::query()->find(request()->account_from);
-        $accountTo = Account::query()->find(request()->account_to);
+        $accountFrom = Account::query()->find(request()->account_from_id);
+        $accountTo = Account::query()->find(request()->account_to_id);
 
         return (
             $transfer->user->getKey() === $user->getKey() &&

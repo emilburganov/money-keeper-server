@@ -23,7 +23,7 @@ class GetBalanceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'currency' => 'required|string|exists:currencies,code',
+            'currency' => 'required|string|exists:currencies,id',
         ];
     }
 }

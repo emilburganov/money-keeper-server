@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Expense;
 
 use App\Http\Requests\Expense\UpdateRequest;
-use App\Http\Resources\AccountResource;
 use App\Http\Resources\ExpenseResource;
+use App\Models\Account;
 use App\Models\Expense;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\App;
 
 class UpdateController extends BaseController
 {
@@ -14,6 +15,14 @@ class UpdateController extends BaseController
     {
         $this->authorize('update', $expense);
         $data = $request->safe();
+
+        $account = Account::query()->find($data->account_id);
+
+        if ($account->total < $data->amount) {
+            return response()->json([
+                'message' => __('errors.expenses.money.enough'),
+            ], 400);
+        }
 
         $this->service->update($expense, $data);
 
