@@ -26,7 +26,7 @@ class UpdateUserRequest extends FormRequest
             'name' => 'required|string|between:3,60',
             'email' => 'required|email',
             'currency_id' => 'required|exists:currencies,id',
-            'avatar' => 'nullable',
+            'avatar' => 'nullable|image|mimes:png,jpg,svg|max:4096',
         ];
     }
 }

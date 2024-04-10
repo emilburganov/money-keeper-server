@@ -7,7 +7,6 @@ use App\Http\Requests\Auth\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class UpdateUserController extends Controller
@@ -22,17 +21,20 @@ class UpdateUserController extends Controller
         $user = Auth::user();
         $data = $request->safe();
 
-        return response()->json($data);
         $user->update([
             'name' => $data->name,
             'email' => $data->email,
         ]);
 
-        $avatar = $request->file('avatar');
+        $avatar = $data->avatar;
 
         if ($avatar) {
-            Storage::disk('public')
-                ->putFileAs('avatars', $avatar, Str::uuid() . '.' . $avatar->extension());
+            $avatarFileName = Str::uuid() . '.' . $avatar->extension();
+            $avatar->move('images/avatars', $avatarFileName);
+
+            $user->update([
+                'avatar' => 'images/avatars/' . $avatarFileName
+            ]);
         }
 
         $user->currency()->associate($data->currency_id);
