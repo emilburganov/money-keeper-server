@@ -76,7 +76,14 @@ class User extends Authenticatable implements JWTSubject
 
     public function transfers(): HasManyThrough
     {
-        return $this->hasManyThrough(Transfer::class, Account::class, 'id', 'account_from_id');
+        return $this->hasManyThrough(
+            Transfer::class,
+            Account::class,
+            'user_id',
+            'account_from_id',
+            'id',
+            'id',
+        );
     }
 
     public function currency(): BelongsTo

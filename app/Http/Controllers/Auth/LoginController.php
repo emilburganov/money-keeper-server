@@ -11,7 +11,10 @@ class LoginController extends Controller
 {
     public function __invoke(LoginRequest $request): JsonResponse
     {
-        $data = $request->safe()->only(['email', 'password']);
+        $data = $request->safe()->only([
+            'email',
+            'password'
+        ]);
 
         if (!$token = Auth::attempt($data)) {
             return response()->json([

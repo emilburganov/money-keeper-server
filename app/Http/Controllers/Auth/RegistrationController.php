@@ -12,7 +12,12 @@ class RegistrationController extends Controller
 {
     public function __invoke(RegistrationRequest $request): JsonResponse
     {
-        $data = $request->safe()->only(['name', 'email', 'password', 'password_confirmation']);
+        $data = $request->safe()->only([
+            'name',
+            'email',
+            'password',
+            'password_confirmation'
+        ]);
 
         User::query()->create($data);
 

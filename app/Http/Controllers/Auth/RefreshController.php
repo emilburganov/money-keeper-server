@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class RefreshController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function __invoke(): JsonResponse
     {
         return response()->json([

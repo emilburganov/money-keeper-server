@@ -26,9 +26,8 @@ class UpdateUserController extends Controller
             'email' => $data->email,
         ]);
 
-        $avatar = $data->avatar;
-
-        if ($avatar) {
+        if (isset($data->avatar)) {
+            $avatar = $data->avatar;
             $avatarFileName = Str::uuid() . '.' . $avatar->extension();
             $avatar->move('images/avatars', $avatarFileName);
 

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('code');
-            $table->float('value');
+            $table->float('value', 15, 6);
             $table->timestamps();
         });
     }

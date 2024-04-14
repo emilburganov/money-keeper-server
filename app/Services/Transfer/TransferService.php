@@ -20,7 +20,7 @@ class TransferService
     {
         return Transfer::query()->create([
             'title' => $data->title,
-            'amount' => $data->amount,
+            'amount' => (float)$data->amount,
             'account_from_id' => $data->account_from_id,
             'account_to_id' => $data->account_to_id,
         ]);
@@ -30,7 +30,7 @@ class TransferService
     {
         $transfer->update([
             'title' => $data->title,
-            'amount' => $data->amount,
+            'amount' => (float)$data->amount,
         ]);
 
         $transfer->accountFrom()->associate($data->account_from_id);

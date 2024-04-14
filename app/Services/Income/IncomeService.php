@@ -20,7 +20,7 @@ class IncomeService
     {
         return Income::query()->create([
             'title' => $data->title,
-            'amount' => $data->amount,
+            'amount' => (float)$data->amount,
             'category_id' => $data->category_id,
             'account_id' => $data->account_id,
         ]);
@@ -30,7 +30,7 @@ class IncomeService
     {
         $income->update([
             'title' => $data->title,
-            'amount' => $data->amount,
+            'amount' => (float)$data->amount,
         ]);
 
         $income->category()->associate($data->category_id);
