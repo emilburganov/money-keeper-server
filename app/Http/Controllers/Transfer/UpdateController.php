@@ -23,7 +23,7 @@ class UpdateController extends BaseController
             ], 400);
         }
 
-        if ($accountFrom->total < $data->amount) {
+        if ($accountFrom->total + $transfer->amount < $data->amount) {
             return response()->json([
                 'message' => __('errors.transfers.money.enough'),
             ], 400);

@@ -28,7 +28,6 @@ class StoreController extends BaseController
             ], 400);
         }
 
-
         $transfer = $this->service->store($data);
 
         return response()->json(
