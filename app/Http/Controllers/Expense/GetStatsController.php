@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Income;
+namespace App\Http\Controllers\Expense;
 
 use Illuminate\Http\JsonResponse;
 
-class GetIncomesStatsController extends BaseController
+class GetStatsController extends BaseController
 {
     public function __invoke(): JsonResponse
     {
-        [$labels, $values] = $this->service->getIncomesStats();
+        [$labels, $values] = $this->service->getExpensesStats();
 
         return response()->json([
             'labels' => $labels,

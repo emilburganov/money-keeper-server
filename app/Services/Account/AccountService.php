@@ -40,11 +40,15 @@ class AccountService
     public function getAccountsStats(): array
     {
         $currency = Auth::user()->currency;
-
         $accountsStats = Auth::user()->accounts()->get();
 
-        $labels = $accountsStats->map(fn($accountsStat) => $accountsStat->title);
-        $values = $accountsStats->map(fn($accountsStat) => round($accountsStat->total * $accountsStat->currency->value / $currency->value, 2));
+        $labels = $accountsStats->map(function ($accountsStat) {
+            return $accountsStat->title;
+        });
+
+        $values = $accountsStats->map(function ($accountsStat) use ($currency) {
+            return round($accountsStat->total * $accountsStat->currency->value / $currency->value, 2);
+        });
 
         return [$labels, $values];
     }

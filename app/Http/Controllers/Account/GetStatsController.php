@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Account;
 
 use Illuminate\Http\JsonResponse;
 
-class GetAccountsStatsController extends BaseController
+class GetStatsController extends BaseController
 {
     public function __invoke(): JsonResponse
     {
