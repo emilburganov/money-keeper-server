@@ -187,7 +187,7 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('incomes')->insert([
-            'title' => 'Открытие счета в валюте',
+            'title' => 'Открытие счета',
             'amount' => 500,
             'category_id' => 12,
             'account_id' => 4,
