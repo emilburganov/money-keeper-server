@@ -51,20 +51,20 @@ class CategoryService
         $values = $categoriesStats->map(function ($categoriesStat) use ($currency, $data) {
             $incomes = $categoriesStat->incomes();
 
-            if (isset($data->date_from)) {
-                $dateFrom = Carbon::parse($data->date_from)
+            if (isset($data->start_date)) {
+                $startDate = Carbon::parse($data->start_date)
                     ->addHours(23)
                     ->addMinutes(59)
                     ->addSeconds(59);
-                $incomes->where('created_at', '>=', $dateFrom);
+                $incomes->where('created_at', '>=', $startDate);
             }
 
-            if (isset($data->date_to)) {
-                $dateTo = Carbon::parse($data->date_to)
+            if (isset($data->end_date)) {
+                $endDate = Carbon::parse($data->end_date)
                     ->addHours(23)
                     ->addMinutes(59)
                     ->addSeconds(59);
-                $incomes->where('created_at', '<=', $dateTo);
+                $incomes->where('created_at', '<=', $endDate);
             }
 
             $incomes = $incomes->get();
@@ -89,20 +89,20 @@ class CategoryService
         $values = $categoriesStats->map(function ($categoriesStat) use ($currency, $data) {
             $expenses = $categoriesStat->expenses();
 
-            if (isset($data->date_from)) {
-                $dateFrom = Carbon::parse($data->date_from)
+            if (isset($data->start_date)) {
+                $startDate = Carbon::parse($data->start_date)
                     ->addHours(23)
                     ->addMinutes(59)
                     ->addSeconds(59);
-                $expenses->where('created_at', '>=', $dateFrom);
+                $expenses->where('created_at', '>=', $startDate);
             }
 
-            if (isset($data->date_to)) {
-                $dateTo = Carbon::parse($data->date_to)
+            if (isset($data->end_date)) {
+                $endDate = Carbon::parse($data->end_date)
                     ->addHours(23)
                     ->addMinutes(59)
                     ->addSeconds(59);
-                $expenses->where('created_at', '<=', $dateTo);
+                $expenses->where('created_at', '<=', $endDate);
             }
 
             $expenses = $expenses->get();
