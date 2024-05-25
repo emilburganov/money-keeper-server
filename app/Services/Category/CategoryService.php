@@ -2,6 +2,7 @@
 
 namespace App\Services\Category;
 
+use App\Enums\CategoryTypeEnum;
 use App\Models\Category;
 use App\Models\Expense;
 use App\Models\Income;
@@ -42,7 +43,10 @@ class CategoryService
     public function getIncomeCategoriesStats($data): array
     {
         $currency = Auth::user()->currency;
-        $categoriesStats = Auth::user()->categories()->get();
+        $categoriesStats = Auth::user()
+            ->categories()
+            ->where('type', CategoryTypeEnum::INCOMES)
+            ->get();
 
         $labels = $categoriesStats->map(function ($categoriesStat) {
             return $categoriesStat->title;
@@ -80,7 +84,10 @@ class CategoryService
     public function getExpenseCategoriesStats($data): array
     {
         $currency = Auth::user()->currency;
-        $categoriesStats = Auth::user()->categories()->get();
+        $categoriesStats = Auth::user()
+            ->categories()
+            ->where('type', CategoryTypeEnum::EXPENSES)
+            ->get();
 
         $labels = $categoriesStats->map(function ($categoriesStat) {
             return $categoriesStat->title;
