@@ -4,6 +4,7 @@ namespace App\Http\Requests\Auth;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|between:3,60',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email,' . Auth::id(),
             'currency_id' => 'required|exists:currencies,id',
             'avatar' => 'nullable|image|mimes:png,jpg,svg|max:4096',
         ];
