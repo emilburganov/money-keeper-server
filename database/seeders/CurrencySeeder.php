@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Currency;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class CurrencySeeder extends Seeder
 {
@@ -13,10 +14,18 @@ class CurrencySeeder extends Seeder
      */
     public function run(): void
     {
-        Currency::query()->create([
+        DB::table('currencies')->insert([
+            'id' => 1,
             'title' => 'Российский рубль',
             'value' => 1,
             'code' => 'RUB',
+        ]);
+
+        DB::table('currencies')->insert([
+            'id' => 16,
+            'title' => 'Доллар США',
+            'value' => 90,
+            'code' => 'USD',
         ]);
     }
 }
