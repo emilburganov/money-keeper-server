@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Enums\CategoryTypeEnum;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -24,8 +23,8 @@ class UserSeeder extends Seeder
 
         /* Categories */
         $user->categories()->create([
-           'title' => 'Оплата ЖКХ',
-           'type' => CategoryTypeEnum::EXPENSES,
+            'title' => 'Оплата ЖКХ',
+            'type' => CategoryTypeEnum::EXPENSES,
         ]);
 
         $user->categories()->create([
