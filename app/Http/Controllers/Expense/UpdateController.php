@@ -16,7 +16,7 @@ class UpdateController extends BaseController
 
         $account = Account::query()->find($data->account_id);
 
-        if ($account->total < $data->amount) {
+        if ($account->total + $expense->amount < $data->amount) {
             return response()->json([
                 'message' => __('errors.expenses.money.enough'),
             ], 400);
