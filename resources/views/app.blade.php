@@ -8,8 +8,7 @@
         content="MoneyKeeper is an application that will help you control your finances and conveniently track all income and expenses"
     />
     <title>MoneyKeeper</title>
-    <meta name="referrer" content="unsafe-url">
-    <script type="module" crossorigin src="/assets/index-B-hmDOvL.js"></script>
+    <script type="module" crossorigin src="/assets/index-MUysnvcQ.js"></script>
 </head>
 <body>
 <div id="root"></div>

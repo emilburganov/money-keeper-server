@@ -1,1 +1,0 @@
-import{b as s,j as o,B as t,aq as e}from"./index-B-hmDOvL.js";const x=({children:r,...a})=>{const{colorMode:n}=s();return o.jsx(t,{w:"full",bg:n==="light"?"gray.50":"gray.800",py:4,children:o.jsx(e,{maxW:"container.xl",minH:"100vh",...a,children:r})})};export{x as C};
