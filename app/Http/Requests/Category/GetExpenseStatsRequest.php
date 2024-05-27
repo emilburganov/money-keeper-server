@@ -26,8 +26,8 @@ class GetExpenseStatsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'start_date' => ['nullable', 'date'],
-            'end_date' => ['nullable', 'date'],
+            'start_date' => ['nullable', 'date', 'after:now'],
+            'end_date' => ['nullable', 'date', 'after:start_date'],
         ];
     }
 }
